@@ -143,8 +143,10 @@ media
 static
 
 #input data and models
-dataset/
+/dataset/
 trained_models/
+
+
 
 #data files
 *.csv

@@ -4,7 +4,7 @@ import schedule
 import time
 from datetime import datetime
 import os
-fom . import config
+from . import config
 
 
 def check_current_timestamp():
@@ -42,7 +42,6 @@ def create_dataframe():
 
 def save_df():
     df = create_dataframe()
-    
     df.to_csv(config.FILE_WRITE_PATH)
     print(f"saved data as CSV to: {config.FILE_WRITE_PATH} ")
 
@@ -52,17 +51,17 @@ def create_cumulative_df():
     remove previous cumulative file and replace 
     with the updated cumulative file
     """
-    file_path = config.FILE_READ_PATH
-    
-    if not os.path.exists(file_path):
+   
+    if not os.path.exists(config.FILE_READ_PATH):
         df = create_dataframe()
-       
         df.to_csv(config.FILE_WRITE_PATH)
         print(f"saved data as CSV to: {config.FILE_WRITE_PATH} ")
         
     existing_df = pd.read_csv(file_path)
     new_df = create_dataframe()
-    cumulative_df = (pd.concat([pd.read_csv(file_path), create_dataframe()], axis=0, join = "inner", ignore_index=True, copy = False).drop_duplicates())
+    cumulative_df = (pd.concat([pd.read_csv(file_path), create_dataframe()], 
+                    axis=0, join = "inner", ignore_index=True, 
+                    copy = False).drop_duplicates())
     
     if os.path.exists(file_path):
         os.remove(file_path)
@@ -75,7 +74,7 @@ def create_cumulative_df():
 if __name__ =="__main__":
     schedule.every(config.SCHEDULE_IN_MIN).minutes.do(create_cumulative_df)
 
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
