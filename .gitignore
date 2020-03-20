@@ -144,7 +144,7 @@ static
 
 #input data and models
 dataset/
-models/
+trained_models/
 
 #data files
 *.csv

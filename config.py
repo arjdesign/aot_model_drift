@@ -1,0 +1,1 @@
+SCHEDULE_IN_MIN = 3
